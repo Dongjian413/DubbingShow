@@ -1,0 +1,84 @@
+//
+//  Header.pch
+//  DubbingShow
+//
+//  Created by liuyan on 17/2/25.
+//  Copyright © 2017年 liuyan. All rights reserved.
+//
+
+#ifndef Header_pch
+#define Header_pch
+
+#ifdef __OBJC__
+
+//#import <UIKit/UIKit.h>
+//#import <Foundation/Foundation.h>
+
+#import "BaseTabBarController.h"
+#import "RDVTabBarController.h"
+#import "SDCycleScrollView.h"
+#import "IQKeyboardManager.h"
+#import <JavaScriptCore/JavaScriptCore.h>
+#import "MJRefresh.h"
+#import "NJKWebViewProgressView.h"
+#import "NJKWebViewProgress.h"
+#import "YYWebImage.h"
+#import "YYCache.h"
+#import "YYImageCache.h"
+#import "UIView+Common.h"
+#import "UIViewController+Swizzle.h"
+#import "UIViewExt.h"
+#import "UIColor+expanded.h"
+
+#endif
+
+#define kCurrentVersion     @"kCurrentVersion"  // 版本
+#define kProjectVersion     @"1.0"              // 项目 版本
+
+//历史搜索记录的文件路径
+#define WNXSearchHistoryPath [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"hisDatas.data"]
+
+// 唯一识别码
+#define kIdentifier [[UIDevice currentDevice].identifierForVendor UUIDString]
+// 时间戳
+#define kOptionTime [NSString stringWithFormat:@"%.0f", [[NSDate dateWithTimeIntervalSinceNow:0] timeIntervalSince1970] *1000]
+
+// 当前系统版本
+#define kVersion    [[UIDevice currentDevice].systemVersion floatValue]
+
+//常用变量
+#define DebugLog(s, ...) NSLog(@"%s(%d): %@", __FUNCTION__, __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__])
+
+//判断设备类型
+#define kDevice_Is_iPhone4 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kDevice_Is_iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kDevice_Is_iPhone6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kDevice_Is_iPhone6Plus ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO)
+
+
+// 判断设备系统
+#define  NLSystemVersionGreaterOrEqualThan(version) ([[[UIDevice currentDevice] systemVersion] floatValue] >= version)
+#define IOS7_OR_LATER       NLSystemVersionGreaterOrEqualThan(7.0)
+#define kBadgeTipStr        @"badgeTip"
+#define kPaddingLeftWidth   15.0
+
+#define kBackButtonFontSize     16
+#define kColorWithRGB(r, g, b)  [UIColor colorWithRed:(r) / 255.f green:(g) / 255.f blue:(b) / 255.f alpha:1.f]
+#define kTableViewSepColor  kColorWithRGB(218, 218, 218)                        // tableview分割线颜色
+#define kTableBackColor     kColorWithRGB(241, 241, 241)                        // tableview背景颜色
+
+//线的高度
+#define kLineHeight         1.0f / [UIScreen mainScreen].scale
+
+// 获取当前设备的物理屏幕尺寸
+#define kKeyWindow      [UIApplication sharedApplication].keyWindow
+#define kScreen_Bounds  [UIScreen mainScreen].bounds
+#define kScreenHeight   [UIScreen mainScreen].bounds.size.height
+#define kScreenWidth    [UIScreen mainScreen].bounds.size.width
+
+//返回缩放后的尺寸
+#define kAdaptScreen(size) size / 667 * kScreenHeight
+#define kAdaptWidth(size)   ceilf(size / 375 * kScreenWidth)
+
+
+#endif /* Header_pch */
