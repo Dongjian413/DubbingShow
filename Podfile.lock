@@ -1,0 +1,112 @@
+PODS:
+  - hpple (0.2.0)
+  - iCarousel (1.8.2)
+  - IQKeyboardManager (4.0.5)
+  - JSONModel (1.1.2)
+  - Masonry (0.6.4)
+  - MJExtension (3.0.13)
+  - MJRefresh (3.0.8)
+  - MLInputDodger (1.3.2)
+  - NJKWebViewProgress (0.2.3):
+    - NJKWebViewProgress/Core (= 0.2.3)
+    - NJKWebViewProgress/ProgressView (= 0.2.3)
+  - NJKWebViewProgress/Core (0.2.3)
+  - NJKWebViewProgress/ProgressView (0.2.3)
+  - pop (1.0.9)
+  - POP+MCAnimate (2.0.1):
+    - pop (~> 1.0)
+    - POP+MCAnimate/Animations (= 2.0.1)
+    - POP+MCAnimate/Group (= 2.0.1)
+    - POP+MCAnimate/Internal (= 2.0.1)
+    - POP+MCAnimate/Shorthand (= 2.0.1)
+    - POP+MCAnimate/Velocity (= 2.0.1)
+  - POP+MCAnimate/Animations (2.0.1):
+    - pop (~> 1.0)
+    - POP+MCAnimate/Group
+    - POP+MCAnimate/Internal
+    - POP+MCAnimate/Shorthand
+    - POP+MCAnimate/Velocity
+  - POP+MCAnimate/Group (2.0.1):
+    - pop (~> 1.0)
+  - POP+MCAnimate/Internal (2.0.1):
+    - pop (~> 1.0)
+  - POP+MCAnimate/Shorthand (2.0.1):
+    - pop (~> 1.0)
+  - POP+MCAnimate/Velocity (2.0.1):
+    - pop (~> 1.0)
+    - POP+MCAnimate/Internal
+  - PSTAlertController (1.2.0)
+  - RDVTabBarController (1.1.9)
+  - ReactiveCocoa (2.3.1):
+    - ReactiveCocoa/UI (= 2.3.1)
+  - ReactiveCocoa/Core (2.3.1):
+    - ReactiveCocoa/no-arc
+  - ReactiveCocoa/no-arc (2.3.1)
+  - ReactiveCocoa/UI (2.3.1):
+    - ReactiveCocoa/Core
+  - SDCycleScrollView (1.65):
+    - SDWebImage (~> 3.7)
+  - SDWebImage (3.7.6):
+    - SDWebImage/Core (= 3.7.6)
+  - SDWebImage/Core (3.7.6)
+  - SMPageControl (1.2)
+  - TTTAttributedLabel (1.10.1)
+  - XHRealTimeBlur (1.7)
+  - XHSinaMenuView (1.4):
+    - pop
+    - XHRealTimeBlur
+  - YYCache (1.0.3)
+  - YYImage (1.0.3):
+    - YYImage/Core (= 1.0.3)
+  - YYImage/Core (1.0.3)
+  - YYWebImage (0.9.14):
+    - YYCache
+    - YYImage
+
+DEPENDENCIES:
+  - hpple (= 0.2.0)
+  - iCarousel (~> 1.8.2)
+  - IQKeyboardManager (~> 4.0.0)
+  - JSONModel (~> 1.1.2)
+  - Masonry (~> 0.6.3)
+  - MJExtension
+  - MJRefresh (~> 3.0.6)
+  - MLInputDodger (~> 1.3.0)
+  - NJKWebViewProgress (~> 0.2.3)
+  - POP+MCAnimate (= 2.0.1)
+  - PSTAlertController (~> 1.2.0)
+  - RDVTabBarController (~> 1.1.9)
+  - ReactiveCocoa (= 2.3.1)
+  - SDCycleScrollView (~> 1.3)
+  - SDWebImage (~> 3.7.3)
+  - SMPageControl (~> 1.2)
+  - TTTAttributedLabel (= 1.10.1)
+  - XHSinaMenuView (~> 1.4)
+  - YYWebImage (~> 0.9.11)
+
+SPEC CHECKSUMS:
+  hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
+  iCarousel: 67c8a43da5a46795b56aadfc96cd36a16f6149b2
+  IQKeyboardManager: 50b62c0603308968256f8208886e206c1dcce607
+  JSONModel: 216584d0311b053ff714f1d6cb700dbf890847bc
+  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
+  MJExtension: 5932755f451458eefa24239358817f8d291240c7
+  MJRefresh: fafde8f18f4afd66b434331a9beb67a6c0264056
+  MLInputDodger: b18cc6651e46e2a213c9b9f98cf6635998f8ec28
+  NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
+  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
+  POP+MCAnimate: a99e209148c602512de487f1160a44bf78572024
+  PSTAlertController: 9b802dfbda54fee2683bfd6dda7023a6de895d5b
+  RDVTabBarController: 67794f7a7a37f8e32f046f85ac67d06ab92d624a
+  ReactiveCocoa: 3fe9b233ca6db810e86681b5749488564c1179a1
+  SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
+  SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
+  SMPageControl: 922892813001cfaf059e86e6801f46a967e9ee29
+  TTTAttributedLabel: c8f3801a6463b9c9b82b0c84c465fdda9751892a
+  XHRealTimeBlur: 661fadd5691ba2d349758e8fd5fbdb499ac55f8c
+  XHSinaMenuView: cfb6e02fc4928c4708c83759ee8fde5155ce5f33
+  YYCache: 282f35b5b0990833d0b7a06d864a87141a021da2
+  YYImage: 362f44ffba1fc498f2152060f3bb54ed84600981
+  YYWebImage: 0c2e14728b5783000ac5a2db08bb10fa7065dad6
+
+COCOAPODS: 0.39.0
