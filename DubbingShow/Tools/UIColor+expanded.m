@@ -49,264 +49,281 @@ static NSMutableDictionary *colorNameCache = nil;
 @implementation UIColor (UIColor_Expanded)
 
 - (CGColorSpaceModel)colorSpaceModel {
-	return CGColorSpaceGetModel(CGColorGetColorSpace(self.CGColor));
+    return CGColorSpaceGetModel(CGColorGetColorSpace(self.CGColor));
 }
 
 - (NSString *)colorSpaceString {
-	switch (self.colorSpaceModel) {
-		case kCGColorSpaceModelUnknown:
-			return @"kCGColorSpaceModelUnknown";
-		case kCGColorSpaceModelMonochrome:
-			return @"kCGColorSpaceModelMonochrome";
-		case kCGColorSpaceModelRGB:
-			return @"kCGColorSpaceModelRGB";
-		case kCGColorSpaceModelCMYK:
-			return @"kCGColorSpaceModelCMYK";
-		case kCGColorSpaceModelLab:
-			return @"kCGColorSpaceModelLab";
-		case kCGColorSpaceModelDeviceN:
-			return @"kCGColorSpaceModelDeviceN";
-		case kCGColorSpaceModelIndexed:
-			return @"kCGColorSpaceModelIndexed";
-		case kCGColorSpaceModelPattern:
-			return @"kCGColorSpaceModelPattern";
-		default:
-			return @"Not a valid color space";
-	}
+    switch (self.colorSpaceModel) {
+        case kCGColorSpaceModelUnknown:
+            return @"kCGColorSpaceModelUnknown";
+        case kCGColorSpaceModelMonochrome:
+            return @"kCGColorSpaceModelMonochrome";
+        case kCGColorSpaceModelRGB:
+            return @"kCGColorSpaceModelRGB";
+        case kCGColorSpaceModelCMYK:
+            return @"kCGColorSpaceModelCMYK";
+        case kCGColorSpaceModelLab:
+            return @"kCGColorSpaceModelLab";
+        case kCGColorSpaceModelDeviceN:
+            return @"kCGColorSpaceModelDeviceN";
+        case kCGColorSpaceModelIndexed:
+            return @"kCGColorSpaceModelIndexed";
+        case kCGColorSpaceModelPattern:
+            return @"kCGColorSpaceModelPattern";
+        default:
+            return @"Not a valid color space";
+    }
 }
 
 - (BOOL)canProvideRGBComponents {
-	switch (self.colorSpaceModel) {
-		case kCGColorSpaceModelRGB:
-		case kCGColorSpaceModelMonochrome:
-			return YES;
-		default:
-			return NO;
-	}
+    switch (self.colorSpaceModel) {
+        case kCGColorSpaceModelRGB:
+        case kCGColorSpaceModelMonochrome:
+            return YES;
+        default:
+            return NO;
+    }
 }
 
 - (NSArray *)arrayFromRGBAComponents {
-	NSAssert(self.canProvideRGBComponents, @"Must be an RGB color to use -arrayFromRGBAComponents");
-	
-	CGFloat r,g,b,a;
-	if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
-	
-	return [NSArray arrayWithObjects:
-			[NSNumber numberWithFloat:r],
-			[NSNumber numberWithFloat:g],
-			[NSNumber numberWithFloat:b],
-			[NSNumber numberWithFloat:a],
-			nil];
+    NSAssert(self.canProvideRGBComponents, @"Must be an RGB color to use -arrayFromRGBAComponents");
+    
+    CGFloat r,g,b,a;
+    if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
+    
+    return [NSArray arrayWithObjects:
+            [NSNumber numberWithFloat:r],
+            [NSNumber numberWithFloat:g],
+            [NSNumber numberWithFloat:b],
+            [NSNumber numberWithFloat:a],
+            nil];
 }
 
 - (BOOL)red:(CGFloat *)red green:(CGFloat *)green blue:(CGFloat *)blue alpha:(CGFloat *)alpha {
-	const CGFloat *components = CGColorGetComponents(self.CGColor);
-	
-	CGFloat r,g,b,a;
-	
-	switch (self.colorSpaceModel) {
-		case kCGColorSpaceModelMonochrome:
-			r = g = b = components[0];
-			a = components[1];
-			break;
-		case kCGColorSpaceModelRGB:
-			r = components[0];
-			g = components[1];
-			b = components[2];
-			a = components[3];
-			break;
-		default:	// We don't know how to handle this model
-			return NO;
-	}
-	
-	if (red) *red = r;
-	if (green) *green = g;
-	if (blue) *blue = b;
-	if (alpha) *alpha = a;
-	
-	return YES;
+    const CGFloat *components = CGColorGetComponents(self.CGColor);
+    
+    CGFloat r,g,b,a;
+    
+    switch (self.colorSpaceModel) {
+        case kCGColorSpaceModelMonochrome:
+            r = g = b = components[0];
+            a = components[1];
+            break;
+        case kCGColorSpaceModelRGB:
+            r = components[0];
+            g = components[1];
+            b = components[2];
+            a = components[3];
+            break;
+        default:	// We don't know how to handle this model
+            return NO;
+    }
+    
+    if (red) *red = r;
+    if (green) *green = g;
+    if (blue) *blue = b;
+    if (alpha) *alpha = a;
+    
+    return YES;
 }
 
 - (CGFloat)red {
-	NSAssert(self.canProvideRGBComponents, @"Must be an RGB color to use -red");
-	const CGFloat *c = CGColorGetComponents(self.CGColor);
-	return c[0];
+    NSAssert(self.canProvideRGBComponents, @"Must be an RGB color to use -red");
+    const CGFloat *c = CGColorGetComponents(self.CGColor);
+    return c[0];
 }
 
 - (CGFloat)green {
-	NSAssert(self.canProvideRGBComponents, @"Must be an RGB color to use -green");
-	const CGFloat *c = CGColorGetComponents(self.CGColor);
-	if (self.colorSpaceModel == kCGColorSpaceModelMonochrome) return c[0];
-	return c[1];
+    NSAssert(self.canProvideRGBComponents, @"Must be an RGB color to use -green");
+    const CGFloat *c = CGColorGetComponents(self.CGColor);
+    if (self.colorSpaceModel == kCGColorSpaceModelMonochrome) return c[0];
+    return c[1];
 }
 
 - (CGFloat)blue {
-	NSAssert(self.canProvideRGBComponents, @"Must be an RGB color to use -blue");
-	const CGFloat *c = CGColorGetComponents(self.CGColor);
-	if (self.colorSpaceModel == kCGColorSpaceModelMonochrome) return c[0];
-	return c[2];
+    NSAssert(self.canProvideRGBComponents, @"Must be an RGB color to use -blue");
+    const CGFloat *c = CGColorGetComponents(self.CGColor);
+    if (self.colorSpaceModel == kCGColorSpaceModelMonochrome) return c[0];
+    return c[2];
 }
 
 - (CGFloat)white {
-	NSAssert(self.colorSpaceModel == kCGColorSpaceModelMonochrome, @"Must be a Monochrome color to use -white");
-	const CGFloat *c = CGColorGetComponents(self.CGColor);
-	return c[0];
+    NSAssert(self.colorSpaceModel == kCGColorSpaceModelMonochrome, @"Must be a Monochrome color to use -white");
+    const CGFloat *c = CGColorGetComponents(self.CGColor);
+    return c[0];
 }
 
 - (CGFloat)alpha {
-	return CGColorGetAlpha(self.CGColor);
+    return CGColorGetAlpha(self.CGColor);
 }
 
 - (UInt32)rgbHex {
-	NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use rgbHex");
-	
-	CGFloat r,g,b,a;
-	if (![self red:&r green:&g blue:&b alpha:&a]) return 0;
-	
-	r = MIN(MAX(self.red, 0.0f), 1.0f);
-	g = MIN(MAX(self.green, 0.0f), 1.0f);
-	b = MIN(MAX(self.blue, 0.0f), 1.0f);
-	
-	return (((int)roundf(r * 255)) << 16)
-	| (((int)roundf(g * 255)) << 8)
-	| (((int)roundf(b * 255)));
+    NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use rgbHex");
+    
+    CGFloat r,g,b,a;
+    if (![self red:&r green:&g blue:&b alpha:&a]) return 0;
+    
+    r = MIN(MAX(self.red, 0.0f), 1.0f);
+    g = MIN(MAX(self.green, 0.0f), 1.0f);
+    b = MIN(MAX(self.blue, 0.0f), 1.0f);
+    
+    return (((int)roundf(r * 255)) << 16)
+    | (((int)roundf(g * 255)) << 8)
+    | (((int)roundf(b * 255)));
 }
 
 #pragma mark Arithmetic operations
 
 - (UIColor *)colorByLuminanceMapping {
-	NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
-	
-	CGFloat r,g,b,a;
-	if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
-	
-	// http://en.wikipedia.org/wiki/Luma_(video)
-	// Y = 0.2126 R + 0.7152 G + 0.0722 B
-	return [UIColor colorWithWhite:r*0.2126f + g*0.7152f + b*0.0722f
-							 alpha:a];
-	
+    NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
+    
+    CGFloat r,g,b,a;
+    if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
+    
+    // http://en.wikipedia.org/wiki/Luma_(video)
+    // Y = 0.2126 R + 0.7152 G + 0.0722 B
+    return [UIColor colorWithWhite:r*0.2126f + g*0.7152f + b*0.0722f
+                             alpha:a];
+    
 }
 
 - (UIColor *)colorByMultiplyingByRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha {
-	NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
-	
-	CGFloat r,g,b,a;
-	if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
-	
-	return [UIColor colorWithRed:MAX(0.0, MIN(1.0, r * red))
-						   green:MAX(0.0, MIN(1.0, g * green)) 
-							blue:MAX(0.0, MIN(1.0, b * blue))
-						   alpha:MAX(0.0, MIN(1.0, a * alpha))];
+    NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
+    
+    CGFloat r,g,b,a;
+    if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
+    
+   // return [UIColor colorWithRed:MAX(0.0, MIN(1.0, r * red))
+                           //green:MAX(0.0, MIN(1.0, g * green))
+                            //blue:MAX(0.0, MIN(1.0, b * blue))
+                           //alpha:MAX(0.0, MIN(1.0, a * alpha))];
+    
+    
+    return [UIColor GreatColorWithRed:MAX(0.0, MIN(1.0, r * red))
+                             AndGreen:MAX(0.0, MIN(1.0, g * green))
+                              AndBlue:MAX(0.0, MIN(1.0, b * blue))
+                             AndAlpha:MAX(0.0, MIN(1.0, a * alpha))];
 }
 
 - (UIColor *)colorByAddingRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha {
-	NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
-	
-	CGFloat r,g,b,a;
-	if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
-	
-	return [UIColor colorWithRed:MAX(0.0, MIN(1.0, r + red))
-						   green:MAX(0.0, MIN(1.0, g + green)) 
-							blue:MAX(0.0, MIN(1.0, b + blue))
-						   alpha:MAX(0.0, MIN(1.0, a + alpha))];
+    NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
+    
+    CGFloat r,g,b,a;
+    if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
+    
+    //return [UIColor colorWithRed:MAX(0.0, MIN(1.0, r + red))
+    //green:MAX(0.0, MIN(1.0, g + green))
+    //blue:MAX(0.0, MIN(1.0, b + blue))
+    //alpha:MAX(0.0, MIN(1.0, a + alpha))];
+    
+    return [UIColor GreatColorWithRed:MAX(0.0, MIN(1.0, r + red))
+                             AndGreen:MAX(0.0, MIN(1.0, g + green))
+                              AndBlue:MAX(0.0, MIN(1.0, b + blue))
+                             AndAlpha:MAX(0.0, MIN(1.0, a + alpha))];
+    
 }
 
 - (UIColor *)colorByLighteningToRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha {
-	NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
-	
-	CGFloat r,g,b,a;
-	if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
-	
-	return [UIColor colorWithRed:MAX(r, red)
-						   green:MAX(g, green)
-							blue:MAX(b, blue)
-						   alpha:MAX(a, alpha)];
+    NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
+    
+    CGFloat r,g,b,a;
+    if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
+    
+    
+    return [UIColor GreatColorWithRed:MAX(r, red) AndGreen:MAX(g, green) AndBlue:MAX(b, blue) AndAlpha:MAX(a, alpha)];
+    
+    //return [UIColor colorWithRed:MAX(r, red)
+    //green:MAX(g, green)
+    //blue:MAX(b, blue)
+    //alpha:MAX(a, alpha)];
 }
 
 - (UIColor *)colorByDarkeningToRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha {
-	NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
-	
-	CGFloat r,g,b,a;
-	if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
-	
-	return [UIColor colorWithRed:MIN(r, red)
-						   green:MIN(g, green)
-							blue:MIN(b, blue)
-						   alpha:MIN(a, alpha)];
+    NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
+    
+    CGFloat r,g,b,a;
+    if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
+    
+    return [UIColor GreatColorWithRed:MIN(r, red) AndGreen:MIN(g, green) AndBlue:MIN(b, blue) AndAlpha:MIN(a, alpha)];
+    
+    //return [UIColor colorWithRed:MIN(r, red)
+    //green:MIN(g, green)
+    //blue:MIN(b, blue)
+    //alpha:MIN(a, alpha)];
 }
 
 - (UIColor *)colorByMultiplyingBy:(CGFloat)f {
-	return [self colorByMultiplyingByRed:f green:f blue:f alpha:1.0f];
+    return [self colorByMultiplyingByRed:f green:f blue:f alpha:1.0f];
 }
 
 - (UIColor *)colorByAdding:(CGFloat)f {
-	return [self colorByMultiplyingByRed:f green:f blue:f alpha:0.0f];
+    return [self colorByMultiplyingByRed:f green:f blue:f alpha:0.0f];
 }
 
 - (UIColor *)colorByLighteningTo:(CGFloat)f {
-	return [self colorByLighteningToRed:f green:f blue:f alpha:0.0f];
+    return [self colorByLighteningToRed:f green:f blue:f alpha:0.0f];
 }
 
 - (UIColor *)colorByDarkeningTo:(CGFloat)f {
-	return [self colorByDarkeningToRed:f green:f blue:f alpha:1.0f];
+    return [self colorByDarkeningToRed:f green:f blue:f alpha:1.0f];
 }
 
 - (UIColor *)colorByMultiplyingByColor:(UIColor *)color {
-	NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
-	
-	CGFloat r,g,b,a;
-	if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
-	
-	return [self colorByMultiplyingByRed:r green:g blue:b alpha:1.0f];
+    NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
+    
+    CGFloat r,g,b,a;
+    if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
+    
+    return [self colorByMultiplyingByRed:r green:g blue:b alpha:1.0f];
 }
 
 - (UIColor *)colorByAddingColor:(UIColor *)color {
-	NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
-	
-	CGFloat r,g,b,a;
-	if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
-	
-	return [self colorByAddingRed:r green:g blue:b alpha:0.0f];
+    NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
+    
+    CGFloat r,g,b,a;
+    if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
+    
+    return [self colorByAddingRed:r green:g blue:b alpha:0.0f];
 }
 
 - (UIColor *)colorByLighteningToColor:(UIColor *)color {
-	NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
-	
-	CGFloat r,g,b,a;
-	if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
-	
-	return [self colorByLighteningToRed:r green:g blue:b alpha:0.0f];
+    NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
+    
+    CGFloat r,g,b,a;
+    if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
+    
+    return [self colorByLighteningToRed:r green:g blue:b alpha:0.0f];
 }
 
 - (UIColor *)colorByDarkeningToColor:(UIColor *)color {
-	NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
-	
-	CGFloat r,g,b,a;
-	if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
-	
-	return [self colorByDarkeningToRed:r green:g blue:b alpha:1.0f];
+    NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use arithmatic operations");
+    
+    CGFloat r,g,b,a;
+    if (![self red:&r green:&g blue:&b alpha:&a]) return nil;
+    
+    return [self colorByDarkeningToRed:r green:g blue:b alpha:1.0f];
 }
 
 #pragma mark String utilities
 
 - (NSString *)stringFromColor {
-	NSAssert(self.canProvideRGBComponents, @"Must be an RGB color to use -stringFromColor");
-	NSString *result;
-	switch (self.colorSpaceModel) {
-		case kCGColorSpaceModelRGB:
-			result = [NSString stringWithFormat:@"{%0.3f, %0.3f, %0.3f, %0.3f}", self.red, self.green, self.blue, self.alpha];
-			break;
-		case kCGColorSpaceModelMonochrome:
-			result = [NSString stringWithFormat:@"{%0.3f, %0.3f}", self.white, self.alpha];
-			break;
-		default:
-			result = nil;
-	}
-	return result;
+    NSAssert(self.canProvideRGBComponents, @"Must be an RGB color to use -stringFromColor");
+    NSString *result;
+    switch (self.colorSpaceModel) {
+        case kCGColorSpaceModelRGB:
+            result = [NSString stringWithFormat:@"{%0.3f, %0.3f, %0.3f, %0.3f}", self.red, self.green, self.blue, self.alpha];
+            break;
+        case kCGColorSpaceModelMonochrome:
+            result = [NSString stringWithFormat:@"{%0.3f, %0.3f}", self.white, self.alpha];
+            break;
+        default:
+            result = nil;
+    }
+    return result;
 }
 
 - (NSString *)hexStringFromColor {
-	return [NSString stringWithFormat:@"%0.6X", (int)self.rgbHex];
+    return [NSString stringWithFormat:@"%0.6X", (int)self.rgbHex];
 }
 
 - (BOOL)isDark{
@@ -315,98 +332,129 @@ static NSMutableDictionary *colorNameCache = nil;
 }
 
 + (UIColor *)colorWithString:(NSString *)stringToConvert {
-	NSScanner *scanner = [NSScanner scannerWithString:stringToConvert];
-	if (![scanner scanString:@"{" intoString:NULL]) return nil;
-	const NSUInteger kMaxComponents = 4;
-	CGFloat c[kMaxComponents];
-	NSUInteger i = 0;
-	if (![scanner scanFloat:(float *)&c[i++]]) return nil;
-	while (1) {
-		if ([scanner scanString:@"}" intoString:NULL]) break;
-		if (i >= kMaxComponents) return nil;
-		if ([scanner scanString:@"," intoString:NULL]) {
-			if (![scanner scanFloat:(float *)&c[i++]]) return nil;
-		} else {
-			// either we're at the end of there's an unexpected character here
-			// both cases are error conditions
-			return nil;
-		}
-	}
-	if (![scanner isAtEnd]) return nil;
-	UIColor *color;
-	switch (i) {
-		case 2: // monochrome
-			color = [UIColor colorWithWhite:c[0] alpha:c[1]];
-			break;
-		case 4: // RGB
-			color = [UIColor colorWithRed:c[0] green:c[1] blue:c[2] alpha:c[3]];
-			break;
-		default:
-			color = nil;
-	}
-	return color;
+    NSScanner *scanner = [NSScanner scannerWithString:stringToConvert];
+    if (![scanner scanString:@"{" intoString:NULL]) return nil;
+    const NSUInteger kMaxComponents = 4;
+    CGFloat c[kMaxComponents];
+    NSUInteger i = 0;
+    if (![scanner scanFloat:(float *)&c[i++]]) return nil;
+    while (1) {
+        if ([scanner scanString:@"}" intoString:NULL]) break;
+        if (i >= kMaxComponents) return nil;
+        if ([scanner scanString:@"," intoString:NULL]) {
+            if (![scanner scanFloat:(float *)&c[i++]]) return nil;
+        } else {
+            // either we're at the end of there's an unexpected character here
+            // both cases are error conditions
+            return nil;
+        }
+    }
+    if (![scanner isAtEnd]) return nil;
+    UIColor *color;
+    switch (i) {
+        case 2: // monochrome
+            color = [UIColor colorWithWhite:c[0] alpha:c[1]];
+            break;
+        case 4: // RGB
+            //color = [UIColor colorWithRed:c[0] green:c[1] blue:c[2] alpha:c[3]];
+            color = [UIColor GreatColorWithRed:c[0] AndGreen:c[1] AndBlue:c[2] AndAlpha:c[3]];
+            break;
+        default:
+            color = nil;
+    }
+    return color;
 }
 
 #pragma mark Class methods
 
 + (UIColor *)randomColor {
-    return [UIColor colorWithRed:(arc4random()%256)/256.f
-                           green:(arc4random()%256)/256.f
-                            blue:(arc4random()%256)/256.f
-                           alpha:1.0f];
+    
+    CGFloat r = arc4random_uniform(256) / 255.0 ;
+    CGFloat g = arc4random_uniform(256) / 255.0 ;
+    CGFloat b = arc4random_uniform(256) / 255.0 ;
+    return [UIColor GreatColorWithRed:r AndGreen:g AndBlue:b AndAlpha:1.0];
+    
+    //return [UIColor colorWithRed:(arc4random()%256)/256.f
+    //green:(arc4random()%256)/256.f
+    //blue:(arc4random()%256)/256.f
+    //alpha:1.0f];
 }
 
 + (UIColor *)colorWithRGBHex:(UInt32)hex {
-	int r = (hex >> 16) & 0xFF;
-	int g = (hex >> 8) & 0xFF;
-	int b = (hex) & 0xFF;
-	
-	return [UIColor colorWithRed:r / 255.0f
-						   green:g / 255.0f
-							blue:b / 255.0f
-						   alpha:1.0f];
+    int r = (hex >> 16) & 0xFF;
+    int g = (hex >> 8) & 0xFF;
+    int b = (hex) & 0xFF;
+    
+    return [UIColor GreatColorWithRed:r
+                             AndGreen:g
+                              AndBlue:b
+                             AndAlpha:1.0];
+    
+    //return [UIColor colorWithRed:r / 255.0f
+    //green:g / 255.0f
+    //blue:b / 255.0f
+    //alpha:1.0f];
 }
 
 // Returns a UIColor by scanning the string for a hex number and passing that to +[UIColor colorWithRGBHex:]
 // Skips any leading whitespace and ignores any trailing characters
 + (UIColor *)colorWithHexString:(NSString *)stringToConvert {
-	NSScanner *scanner = [NSScanner scannerWithString:stringToConvert];
-	unsigned hexNum;
-	if (![scanner scanHexInt:&hexNum]) return nil;
-	return [UIColor colorWithRGBHex:hexNum];
+    NSScanner *scanner = [NSScanner scannerWithString:stringToConvert];
+    unsigned hexNum;
+    if (![scanner scanHexInt:&hexNum]) return nil;
+    return [UIColor colorWithRGBHex:hexNum];
 }
 + (UIColor *)colorWithHexString:(NSString *)stringToConvert andAlpha:(CGFloat)alpha{
     UIColor *color = [UIColor colorWithHexString:stringToConvert];
-    return [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:alpha];
+    
+    return [UIColor GreatColorWithRed:color.red AndGreen:color.green AndBlue:color.blue AndAlpha:alpha];
+    //return [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:alpha];
 }
 
 // Lookup a color using css 3/svg color name
 + (UIColor *)colorWithName:(NSString *)cssColorName {
-	UIColor *color;
-	@synchronized(colorNameCache) {
-		// Look for the color in the cache
-		color = [colorNameCache objectForKey:cssColorName];
-		
-		if ((id)color == [NSNull null]) {
-			// If it wasn't there previously, it's still not there now
-			color = nil;
-		} else if (!color) {
-			// Color not in cache, so search for it now
-			color = [self searchForColorByName:cssColorName];
-			
-			// Set the value in cache, storing NSNull on failure
-			[colorNameCache setObject:(color ?: (id)[NSNull null])
-							   forKey:cssColorName];
-		}
-	}
-	
-	return color;
+    UIColor *color;
+    @synchronized(colorNameCache) {
+        // Look for the color in the cache
+        color = [colorNameCache objectForKey:cssColorName];
+        
+        if ((id)color == [NSNull null]) {
+            // If it wasn't there previously, it's still not there now
+            color = nil;
+        } else if (!color) {
+            // Color not in cache, so search for it now
+            color = [self searchForColorByName:cssColorName];
+            
+            // Set the value in cache, storing NSNull on failure
+            [colorNameCache setObject:(color ?: (id)[NSNull null])
+                               forKey:cssColorName];
+        }
+    }
+    
+    return color;
 }
+
+/*  2017.2.26日东健修改
+ *  版本：1.0
+ *  增加iOS10的颜色适配
+ */
+//iOS10颜色的不同渲染方式的原因必须使用colorWithDisplayP3Red才不会导致颜色“突变”
++ (UIColor *)GreatColorWithRed:(CGFloat)red AndGreen:(CGFloat)Green AndBlue:(CGFloat)Blue AndAlpha:(CGFloat)alpna
+{
+    if([UIColor respondsToSelector:@selector(colorWithDisplayP3Red:green:blue:alpha:)])
+    {
+        return [UIColor colorWithDisplayP3Red:red green:Green blue:Blue alpha:alpna];
+    }else
+    {
+        return [UIColor colorWithRed:red green:Green blue:Blue alpha:alpna];
+    }
+}
+
 
 #pragma mark UIColor_Expanded initialization
 
 + (void)load {
-	colorNameCache = [[NSMutableDictionary alloc] init];
+    colorNameCache = [[NSMutableDictionary alloc] init];
 }
 
 @end
@@ -416,27 +464,29 @@ static NSMutableDictionary *colorNameCache = nil;
 #if SUPPORTS_UNDOCUMENTED_API
 @implementation UIColor (UIColor_Undocumented_Expanded)
 - (NSString *)fetchStyleString {
-	return [self styleString];
+    return [self styleString];
 }
 
 // Convert a color into RGB Color space, courtesy of Poltras
 // via http://ofcodeandmen.poltras.com/2009/01/22/convert-a-cgcolorref-to-another-cgcolorspaceref/
 //
 - (UIColor *)rgbColor {
-	// Call to undocumented method "styleString".
-	NSString *style = [self styleString];
-	NSScanner *scanner = [NSScanner scannerWithString:style];
-	CGFloat red, green, blue;
-	if (![scanner scanString:@"rgb(" intoString:NULL]) return nil;
-	if (![scanner scanFloat:&red]) return nil;
-	if (![scanner scanString:@"," intoString:NULL]) return nil;
-	if (![scanner scanFloat:&green]) return nil;
-	if (![scanner scanString:@"," intoString:NULL]) return nil;
-	if (![scanner scanFloat:&blue]) return nil;
-	if (![scanner scanString:@")" intoString:NULL]) return nil;
-	if (![scanner isAtEnd]) return nil;
-	
-	return [UIColor colorWithRed:red green:green blue:blue alpha:self.alpha];
+    // Call to undocumented method "styleString".
+    NSString *style = [self styleString];
+    NSScanner *scanner = [NSScanner scannerWithString:style];
+    CGFloat red, green, blue;
+    if (![scanner scanString:@"rgb(" intoString:NULL]) return nil;
+    if (![scanner scanFloat:&red]) return nil;
+    if (![scanner scanString:@"," intoString:NULL]) return nil;
+    if (![scanner scanFloat:&green]) return nil;
+    if (![scanner scanString:@"," intoString:NULL]) return nil;
+    if (![scanner scanFloat:&blue]) return nil;
+    if (![scanner scanString:@")" intoString:NULL]) return nil;
+    if (![scanner isAtEnd]) return nil;
+    
+    
+    
+    return [UIColor colorWithRed:red green:green blue:blue alpha:self.alpha];
 }
 @end
 #endif // SUPPORTS_UNDOCUMENTED_API
@@ -490,24 +540,29 @@ static const char *colorNameDB = ","
 "white#ffffff,whitesmoke#f5f5f5,yellow#ffff00,yellowgreen#9acd32";
 
 + (UIColor *)searchForColorByName:(NSString *)cssColorName {
-	UIColor *result = nil;
-	
-	// Compile the string we'll use to search against the database
-	// We search for ",<colorname>#" to avoid false matches
-	const char *searchString = [[NSString stringWithFormat:@",%@#", cssColorName] UTF8String];
-	
-	// Search for the color name
-	const char *found = strstr(colorNameDB, searchString);
-	
-	// If found, step past the search string and grab the hex representation
-	if (found) {
-		const char *after = found + strlen(searchString);
-		int hex;
-		if (sscanf(after, "%x", &hex) == 1) {
-			result = [self colorWithRGBHex:hex];
-		}
-	}
-	
-	return result;
+    UIColor *result = nil;
+    
+    // Compile the string we'll use to search against the database
+    // We search for ",<colorname>#" to avoid false matches
+    const char *searchString = [[NSString stringWithFormat:@",%@#", cssColorName] UTF8String];
+    
+    // Search for the color name
+    const char *found = strstr(colorNameDB, searchString);
+    
+    // If found, step past the search string and grab the hex representation
+    if (found) {
+        const char *after = found + strlen(searchString);
+        int hex;
+        if (sscanf(after, "%x", &hex) == 1) {
+            result = [self colorWithRGBHex:hex];
+        }
+    }
+    
+    return result;
 }
+
+
+
+
+
 @end

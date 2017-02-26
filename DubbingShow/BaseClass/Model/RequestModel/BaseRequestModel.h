@@ -6,8 +6,9 @@
 //  Copyright © 2017年 liuyan. All rights reserved.
 //
 
-#import <JSONModel/JSONModel.h>
+#import <Foundation/Foundation.h>
 
-@interface BaseRequestModel : JSONModel
+
+@interface BaseRequestModel : NSObject
 
 @end

@@ -7,7 +7,10 @@
 //
 
 #import "BaseRequestModel.h"
+#import "MJExtension.h"
 
 @implementation BaseRequestModel
+// NSCoding实现
+MJExtensionCodingImplementation
 
 @end

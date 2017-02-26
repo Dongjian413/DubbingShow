@@ -56,6 +56,15 @@
 
 + (UIColor *)colorWithName:(NSString *)cssColorName;
 
+
+/*  2017.2.26日东健修改
+ *  版本：1.0
+ *  增加iOS10的颜色适配
+ */
+//iOS10颜色的不同渲染方式的原因必须使用colorWithDisplayP3Red才不会导致颜色“突变”
++ (UIColor *)GreatColorWithRed:(CGFloat)red AndGreen:(CGFloat)Green AndBlue:(CGFloat)Blue AndAlpha:(CGFloat)alpna;
+
+
 @end
 
 #if SUPPORTS_UNDOCUMENTED_API

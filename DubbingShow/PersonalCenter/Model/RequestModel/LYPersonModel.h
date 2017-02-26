@@ -6,8 +6,8 @@
 //  Copyright © 2017年 liuyan. All rights reserved.
 //
 
-#import <JSONModel/JSONModel.h>
+#import "BaseRequestModel.h"
 
-@interface LYPersonModel : JSONModel
+@interface LYPersonModel : BaseRequestModel
 
 @end

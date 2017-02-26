@@ -63,7 +63,7 @@
 #define kPaddingLeftWidth   15.0
 
 #define kBackButtonFontSize     16
-#define kColorWithRGB(r, g, b)  [UIColor colorWithRed:(r) / 255.f green:(g) / 255.f blue:(b) / 255.f alpha:1.f]
+#define kColorWithRGB(r, g, b) [UIColor GreatColorWithRed:(r) / 255.f AndGreen:(g) / 255.f AndBlue:(b) / 255.f AndAlpha:1.f]
 #define kTableViewSepColor  kColorWithRGB(218, 218, 218)                        // tableview分割线颜色
 #define kTableBackColor     kColorWithRGB(241, 241, 241)                        // tableview背景颜色
 
