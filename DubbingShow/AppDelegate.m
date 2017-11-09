@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LYGuideController.h"
+#import "DSTabBarController.h"
 
 @interface AppDelegate ()
 
@@ -18,8 +19,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
     [self firstOrNot];
     return YES;
 }
@@ -34,18 +39,9 @@
         LYGuideController *guideVC = [[LYGuideController alloc] init];
         self.window.rootViewController = guideVC;
     }else  {
-        [self makeRootController];
+       self.window.rootViewController = [[DSTabBarController alloc] init];
     }
 }
-
-
-- (void)makeRootController {
-    BaseTabBarController *tabbarVC = [[BaseTabBarController alloc] init];
-    self.tabBarController = tabbarVC;
-    self.window.rootViewController = tabbarVC;
-    [self.window makeKeyAndVisible];
-}
-
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

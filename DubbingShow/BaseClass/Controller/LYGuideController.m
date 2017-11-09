@@ -7,7 +7,7 @@
 //
 
 #import "LYGuideController.h"
-#import "BaseTabBarController.h"
+#import "DSTabBarController.h"
 #import "AppDelegate.h"
 
 @interface LYGuideController ()<UIApplicationDelegate>
@@ -57,7 +57,7 @@
 
 - (void)clickButton:(UIButton *)btn
 {
-    BaseTabBarController *rootVC = [[BaseTabBarController alloc] init];
+    DSTabBarController *rootVC = [[DSTabBarController alloc] init];
     rootVC.edgesForExtendedLayout = UIRectEdgeNone;
     rootVC.tabBar.translucent = YES;
     rootVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;

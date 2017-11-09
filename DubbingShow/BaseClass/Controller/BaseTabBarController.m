@@ -38,6 +38,8 @@
     LYAttentionController *attentionVC = [[LYAttentionController alloc] init];
     UINavigationController *attentionNavi = [[BaseNavigationController alloc] initWithRootViewController:attentionVC];
     
+    
+    
     LYCircleController *circkeVC = [[LYCircleController alloc] init];
     UINavigationController *circleNavi = [[BaseNavigationController alloc] initWithRootViewController:circkeVC];
     
@@ -72,6 +74,7 @@
 
 #pragma mark RDVTabBarControllerDelegate
 - (BOOL)tabBarController:(RDVTabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController{
+    NSLog(@"tabBatController %@  viewController %@", tabBarController, viewController);
 //    self.indexClicked = [self.viewControllers indexOfObject:viewController];
 //    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"tabclicked"];
 //    if (self.indexClicked == 2 ) {
