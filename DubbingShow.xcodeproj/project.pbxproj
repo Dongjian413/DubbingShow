@@ -88,6 +88,7 @@
 		CF6FCEBD1FB207A9000D4611 /* DSTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CF6FCEBC1FB207A9000D4611 /* DSTabBarItem.m */; };
 		CF6FCEC01FB207D9000D4611 /* DSTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CF6FCEBF1FB207D9000D4611 /* DSTabBar.m */; };
 		CF6FCEC31FB2FE85000D4611 /* DSTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF6FCEC21FB2FE85000D4611 /* DSTabBarController.m */; };
+		CF7014DE1FB5558400C88A3F /* OptionalView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF7014DD1FB5558400C88A3F /* OptionalView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -210,6 +211,8 @@
 		CF6FCEBF1FB207D9000D4611 /* DSTabBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSTabBar.m; sourceTree = "<group>"; };
 		CF6FCEC11FB2FE85000D4611 /* DSTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSTabBarController.h; sourceTree = "<group>"; };
 		CF6FCEC21FB2FE85000D4611 /* DSTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSTabBarController.m; sourceTree = "<group>"; };
+		CF7014DC1FB5558400C88A3F /* OptionalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionalView.h; sourceTree = "<group>"; };
+		CF7014DD1FB5558400C88A3F /* OptionalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionalView.m; sourceTree = "<group>"; };
 		E91635E4015B4FBC44041AA6 /* Pods-DubbingShow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DubbingShow.release.xcconfig"; path = "Pods/Target Support Files/Pods-DubbingShow/Pods-DubbingShow.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -826,6 +829,7 @@
 		CF6FCEAB1FB1B545000D4611 /* Expand */ = {
 			isa = PBXGroup;
 			children = (
+				CF6FCEC81FB431C3000D4611 /* OptionalView */,
 				CF6FCEC51FB42998000D4611 /* TabBar */,
 			);
 			path = Expand;
@@ -844,6 +848,15 @@
 				CF6FCEC21FB2FE85000D4611 /* DSTabBarController.m */,
 			);
 			path = TabBar;
+			sourceTree = "<group>";
+		};
+		CF6FCEC81FB431C3000D4611 /* OptionalView */ = {
+			isa = PBXGroup;
+			children = (
+				CF7014DC1FB5558400C88A3F /* OptionalView.h */,
+				CF7014DD1FB5558400C88A3F /* OptionalView.m */,
+			);
+			path = OptionalView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -876,7 +889,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0800;
-				ORGANIZATIONNAME = liuyan;
+				ORGANIZATIONNAME = DubbingShow;
 				TargetAttributes = {
 					4CEEE9151E5E8F460012EA4D = {
 						CreatedOnToolsVersion = 8.0;
@@ -1046,6 +1059,7 @@
 				4CF187981E617F4600F9E80F /* LYHomeModel.m in Sources */,
 				4CF187B31E61803000F9E80F /* LYAttentionCell.m in Sources */,
 				4CF187AA1E617FEB00F9E80F /* LYAttentionRetunModel.m in Sources */,
+				CF7014DE1FB5558400C88A3F /* OptionalView.m in Sources */,
 				4CF187571E6177A400F9E80F /* ObjcRuntime.m in Sources */,
 				CF6FCEBA1FB1F830000D4611 /* DSButton.m in Sources */,
 				4C0C66E91E617228000CFBF5 /* LYGuideController.m in Sources */,
